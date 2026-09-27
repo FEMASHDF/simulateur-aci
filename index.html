@@ -97,8 +97,8 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
 
 <div class="bar" role="status" aria-live="polite">
   <div class="kpi aci"><span>Bloc ACI</span><b class="num" id="k-aci">0 €</b></div>
-  <div class="kpi mfs"><span>Bloc France Santé 2026</span><b class="num" id="k-mfs">0 €</b></div>
-  <div class="kpi tot"><span>Estimation totale 2026</span><b class="num" id="k-tot">0 €</b></div>
+  <div class="kpi mfs"><span>Bloc France Santé</span><b class="num" id="k-mfs">0 €</b></div>
+  <div class="kpi tot"><span>Estimation totale annuelle</span><b class="num" id="k-tot">0 €</b></div>
   <div class="spacer"></div>
   <button class="btn" id="btn-example" type="button">Charger l’exemple</button>
   <button class="btn" id="btn-reset" type="button">Tout effacer</button>
@@ -107,7 +107,7 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
 <div class="tabs" role="tablist" aria-label="Sections du simulateur">
   <button class="tab" role="tab" id="t-aci" aria-controls="p-aci" aria-selected="true">Bloc ACI<span class="chip num" id="c-aci"></span></button>
   <button class="tab" role="tab" id="t-mfs" aria-controls="p-mfs" aria-selected="false">France Santé<span class="chip num" id="c-mfs"></span></button>
-  <button class="tab" role="tab" id="t-res" aria-controls="p-res" aria-selected="false">Résultat 2026-2028</button>
+  <button class="tab" role="tab" id="t-res" aria-controls="p-res" aria-selected="false">Résultat</button>
 </div>
 
 <!-- ============ ACI ============ -->
@@ -124,22 +124,15 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
 
     <div class="axis">Accès aux soins</div>
     <div class="row">
-      <div class="lbl"><div><b>Accessibilité de la structure</b><small>4 100 € fixe, minoré selon l’amplitude d’ouverture.</small>
-        <div class="radios" role="radiogroup" aria-label="Amplitude en semaine">
-          <label><input type="radio" name="sem" id="sem12" value="0" checked> 12 h par jour du lundi au vendredi</label>
-          <label><input type="radio" name="sem" id="sem10" value="-420"> Entre 10 h et 12 h par jour (−420 €)</label>
-          <label><input type="radio" name="sem" id="sem8" value="-1050"> Entre 8 h et 10 h par jour (−1 050 €)</label>
+      <div class="lbl"><div><b>Accessibilité de la structure</b><small>Ouverture de 8 h à 20 h du lundi au vendredi, le samedi matin et pendant les congés scolaires. Une seule situation est retenue : celle qui correspond le mieux à votre MSP.</small>
+        <div class="radios" role="radiogroup" aria-label="Situation d’ouverture">
+          <label><input type="radio" name="accs" id="acc0" value="0" checked> Indicateur non rempli</label>
+          <label><input type="radio" name="accs" id="accN" value="4100"> Ouverture complète : 8 h-20 h en semaine, samedi matin et congés scolaires (4 100 €)</label>
+          <label><input type="radio" name="accs" id="acc10" value="3680"> Amplitude de 10 h à 12 h par jour (3 680 €)</label>
+          <label><input type="radio" name="accs" id="acc8" value="3050"> Amplitude de 8 h à 10 h par jour (3 050 €)</label>
+          <label><input type="radio" name="accs" id="accSam" value="3260"> Fermeture le samedi matin (3 260 €)</label>
+          <label><input type="radio" name="accs" id="accCong" value="3960"> Fermeture de 3 semaines maximum pendant les congés scolaires (3 960 €)</label>
         </div>
-        <div class="radios" role="radiogroup" aria-label="Samedi matin">
-          <label><input type="radio" name="sam" id="samO" value="0" checked> Ouverture le samedi matin (4 h minimum)</label>
-          <label><input type="radio" name="sam" id="samF" value="-840"> Fermeture le samedi matin (−840 €)</label>
-        </div>
-        <div class="radios" role="radiogroup" aria-label="Congés scolaires">
-          <label><input type="radio" name="cong" id="cong0" value="0" checked> Pas de fermeture pendant les congés scolaires</label>
-          <label><input type="radio" name="cong" id="cong3" value="-140"> Fermeture de 3 semaines maximum (−140 €)</label>
-          <label><input type="radio" name="cong" id="congX" value="x"> Fermeture plus longue ou hors congés scolaires (indicateur non validé)</label>
-        </div>
-        <label style="margin-top:8px"><input type="checkbox" id="acc"> Accessibilité remplie (charte d’engagement transmise)</label>
       </div></div>
       <div class="amt num" id="v-acc">0 €</div>
     </div>
@@ -201,8 +194,11 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
     <div class="row"><label><input type="checkbox" id="q1"><span><b>Démarche qualité – niveau 1</b><small>Diagnostic de maturité, référent qualité désigné. 700 €.</small></span></label><div class="amt num" id="v-q1">0 €</div></div>
     <div class="row"><label><input type="checkbox" id="q2"><span><b>Démarche qualité – niveau 2</b><small>Plan d’amélioration mis en œuvre. 1 400 € × patientèle / 4 000.</small></span></label><div class="amt num" id="v-q2">0 €</div></div>
     <div class="row"><label><input type="checkbox" id="q3"><span><b>Démarche qualité – niveau 3</b><small>Résultats et conclusions. 2 100 € × patientèle / 4 000.</small></span></label><div class="amt num" id="v-q3">0 €</div></div>
-    <div class="row"><label><input type="checkbox" id="env1"><span><b>Santé environnementale – niveau 1</b><small>Nouveau. 3 actions engagées, au moins une par volet (décarboner, santé environnementale). 850 €.</small></span></label><div class="amt num" id="v-env1">0 €</div></div>
-    <div class="row"><label><input type="checkbox" id="env2"><span><b>Santé environnementale – niveau 2</b><small>2 actions additionnelles. 1 650 €.</small></span></label><div class="amt num" id="v-env2">0 €</div></div>
+    <div class="axis">Santé environnementale (nouveau : 2 volets, 850 € + 1 650 € par volet)</div>
+    <div class="row"><label><input type="checkbox" id="dec1"><span><b>Volet décarboner – niveau 1</b><small>3 actions : bilan des émissions de CO₂ et actions prioritaires, sensibilisation des PS, gestion des déchets, action « soins éco-responsables ». 850 €.</small></span></label><div class="amt num" id="v-dec1">0 €</div></div>
+    <div class="row"><label><input type="checkbox" id="dec2"><span><b>Volet décarboner – niveau 2</b><small>2 actions additionnelles : transports partagés, protocole « soins éco-responsables », formation des PS. 1 650 €.</small></span></label><div class="amt num" id="v-dec2">0 €</div></div>
+    <div class="row"><label><input type="checkbox" id="env1"><span><b>Volet santé environnementale – niveau 1</b><small>3 actions : sensibilisation des PS, politique d’achat (sans CMR ni perturbateurs endocriniens), conseil et affichage pour les patients. 850 €.</small></span></label><div class="amt num" id="v-env1">0 €</div></div>
+    <div class="row"><label><input type="checkbox" id="env2"><span><b>Volet santé environnementale – niveau 2</b><small>2 actions additionnelles : prévention sur les déterminants environnementaux, formation des PS. 1 650 €.</small></span></label><div class="amt num" id="v-env2">0 €</div></div>
   </div>
 
   <div class="group">
@@ -214,50 +210,71 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
 <!-- ============ MFS ============ -->
 <section class="panel" id="p-mfs" role="tabpanel" aria-labelledby="t-mfs" hidden>
   <div class="patient">
-    <label for="fa">File active de la structure</label>
-    <div class="field"><input type="number" id="fa" min="0" step="100" value="4000"><span class="num">patients</span></div>
-    <small class="warn">Montants modulés selon la racine carrée de la file active, rapportée à une file active de référence de 4 979 patients.</small>
+    <label for="fa">File active (FA) de la structure</label>
+    <div class="field"><input type="number" id="fa" min="0" step="100" value="4979"><span class="num">patients</span></div>
+    <small class="warn">Chaque brique validée vaut 10 000 € × √(FA / 4 979). La FA est le nombre de patients ayant eu au moins 2 contacts, à des dates différentes, avec un professionnel de la MSP. 4 979 = file active de référence (médiane nationale).</small>
   </div>
   <div class="group">
-    <header><h2>Indicateurs socles France Santé</h2><span class="pill no" id="mfs-state">Socle non validé</span></header>
-    <p class="sub">Les 3 indicateurs doivent être validés pour déclencher la rémunération.</p>
-    <div class="row"><label><input type="checkbox" id="m1"><span><b>Tarif opposable</b><small>80 % des consultations des médecins généralistes au tarif opposable.</small></span></label><div></div></div>
-    <div class="row"><label><input type="checkbox" id="m2"><span><b>Présence d’un IDE ou d’un IPA</b><small>Offre de soins infirmiers équivalente à 0,5 ETP par semaine (associé, salarié, vacataire ou partenariat formalisé).</small></span></label><div></div></div>
-    <div class="row"><label><input type="checkbox" id="m3"><span><b>Participation au SAS et/ou à la PDSA</b><small>Au moins 50 % des MG associés participent au SAS (avec organisation pour répondre au régulateur) ou à la PDSA.</small></span></label><div></div></div>
-    <div class="tablewrap"><table aria-label="Valorisation du socle"><thead><tr><th>Socle</th><th>2026</th><th>2027</th><th>2028</th></tr></thead>
-      <tbody><tr><td>Valorisation</td><td class="num" id="ms26">0 €</td><td class="num" id="ms27">0 €</td><td class="num" id="ms28">0 €</td></tr></tbody></table></div>
+    <header><h2>Socle commun France Santé</h2><span class="pill no" id="st-m">0 / 3 indicateurs</span></header>
+    <p class="sub">Les 3 indicateurs sont obligatoires pour valider cette brique.</p>
+<div class="row"><label><input type="checkbox" id="m1"><span><b>Tarif opposable</b><small>80 % des consultations des médecins généralistes facturées au tarif opposable.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="m2"><span><b>Présence d’un IDE ou d’un IPA</b><small>Offre de soins infirmiers équivalente à 0,5 ETP par semaine (associé, salarié, vacataire ou partenariat formalisé).</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="m3"><span><b>Participation au SAS et/ou à la PDSA</b><small>Au moins 50 % des MG associés participent au SAS (avec organisation pour répondre au régulateur) ou au moins 50 % des MG associés ou salariés participent à la PDSA.</small></span></label><div></div></div>
+    <div class="total" style="border-top:0"><span>Valorisation du socle commun</span><span class="num" id="v-m">0 €</span></div>
+  </div>
+  <p class="sub" style="margin:0 4px 12px">Chaque brique complémentaire est validée dès que 2 de ses indicateurs sont atteints.</p>
+  <div class="group">
+    <header><h2>Brique Accès aux soins</h2><span class="pill no" id="st-ba">0 / 2 indicateurs</span></header>
+<div class="row"><label><input type="checkbox" id="ba1" data-b="ba"><span><b>Amplitude horaire élargie</b><small>Présence d’un MG tous les samedis matin, ou ouverture au moins 3 soirs par semaine au-delà de 20 h.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="ba2" data-b="ba"><span><b>Offre élargie en soins non programmés (SNP)</b><small>Au moins 40 % des PS associés effecteurs au SAS et à la PDSA, ou au moins 15 % régulateurs.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="ba3" data-b="ba"><span><b>Soins à domicile ou d’aller-vers</b><small>Visites à domicile et/ou en EHPAD, ou téléconsultation assistée par les IDE.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="ba4" data-b="ba"><span><b>Amélioration de l’offre médicale en territoires en difficulté</b><small>Au moins 50 jours par an d’une ligne médicale en zone d’intervention prioritaire (ZIP), ou téléconsultations avec des pharmacies en ZIP.</small></span></label><div></div></div>
+    <div class="total" style="border-top:0"><span>Valorisation de la brique</span><span class="num" id="v-ba">0 €</span></div>
   </div>
   <div class="group">
-    <header><h2>Briques complémentaires</h2><span class="pill num" id="s-briq">0 €</span></header>
-    <p class="sub">Chaque brique est validée par au moins 2 de ses indicateurs. Elles s’ajoutent au socle à partir de 2027.</p>
-    <div class="row"><label><input type="checkbox" id="b1"><span><b>Accès aux soins</b><small>Amplitude horaire élargie (samedi matin ou 3 soirs après 20 h), offre élargie en soins non programmés, soins à domicile ou aller-vers, renfort médical dans les territoires en difficulté.</small></span></label><div class="amt num" id="v-b1">0 €</div></div>
-    <div class="row"><label><input type="checkbox" id="b2"><span><b>Prévention</b><small>Bilans de prévention des patients précaires, santé mentale (psychologue « Mon soutien psy », IPA psychiatrie ou psychiatre), seuils de dépistage, seuils de vaccination.</small></span></label><div class="amt num" id="v-b2">0 €</div></div>
-    <div class="row"><label><input type="checkbox" id="b3"><span><b>Vulnérabilité</b><small>Patients C2S et AME, accompagnement psychosocial, handicap (annuaire Santé.fr et charte ou convention ESMS), repérage ICOPE.</small></span></label><div class="amt num" id="v-b3">0 €</div></div>
-    <div class="row"><label><input type="checkbox" id="b4"><span><b>Parcours</b><small>Parcours nationaux (MRTC, PCR), coordination de la patientèle ALD, action « 0 patient ALD sans MT », accès aux spécialistes et articulation ville-hôpital.</small></span></label><div class="amt num" id="v-b4">0 €</div></div>
+    <header><h2>Brique Prévention</h2><span class="pill no" id="st-bp">0 / 2 indicateurs</span></header>
+<div class="row"><label><input type="checkbox" id="bp1" data-b="bp"><span><b>Bilan de prévention / bilan de médication</b><small>Plus de 10 % des patients C2S éligibles ont bénéficié d’un bilan « Mon bilan prévention », ou bilans partagés de médication au-delà d’un seuil.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bp2" data-b="bp"><span><b>Santé mentale</b><small>Au moins 0,5 ETP de psychologue « Mon soutien psy » ou d’IPA en psychiatrie, ou intervention d’un psychiatre une journée par mois.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bp3" data-b="bp"><span><b>Dépistage / vaccination (atteinte de seuils)</b><small>Au moins 2 des 5 seuils de dépistage (sein, col, colorectal, maladie rénale, diabète) ou 2 des 4 seuils de vaccination (grippe, covid, pneumocoque, HPV).</small></span></label><div></div></div>
+    <div class="total" style="border-top:0"><span>Valorisation de la brique</span><span class="num" id="v-bp">0 €</span></div>
   </div>
   <div class="group">
-    <div class="tablewrap"><table aria-label="Total France Santé"><thead><tr><th>Bloc France Santé</th><th>2026</th><th>2027</th><th>2028</th></tr></thead>
-      <tbody><tr><td>Socle</td><td class="num" id="r-s26"></td><td class="num" id="r-s27"></td><td class="num" id="r-s28"></td></tr>
-      <tr><td>Briques</td><td class="num" id="r-b26"></td><td class="num" id="r-b27"></td><td class="num" id="r-b28"></td></tr></tbody>
-      <tfoot><tr><td>Total</td><td class="num" id="r-m26"></td><td class="num" id="r-m27"></td><td class="num" id="r-m28"></td></tr></tfoot></table></div>
+    <header><h2>Brique Vulnérabilité</h2><span class="pill no" id="st-bv">0 / 2 indicateurs</span></header>
+<div class="row"><label><input type="checkbox" id="bv1" data-b="bv"><span><b>Patients vulnérables (C2S / AME)</b><small>Taux de patients C2S ou AME de la file active supérieur au taux national de référence.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bv2" data-b="bv"><span><b>Accompagnement de la vulnérabilité psychosociale</b><small>Convention avec des acteurs sociaux, l’ASE ou des structures médico-sociales, ou fonction dédiée (ex. médiateur).</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bv3" data-b="bv"><span><b>Patients en situation de handicap</b><small>Inscription dans l’annuaire des cabinets accessibles de Santé.fr et charte d’accueil (ex. Romain-Jacob) ou convention avec des ESMS.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bv4" data-b="bv"><span><b>Repérage précoce de la perte d’autonomie (ICOPE)</b><small>Protocoles d’organisation pour généraliser le repérage et le projet de santé personnalisé.</small></span></label><div></div></div>
+    <div class="total" style="border-top:0"><span>Valorisation de la brique</span><span class="num" id="v-bv">0 €</span></div>
+  </div>
+  <div class="group">
+    <header><h2>Brique Parcours</h2><span class="pill no" id="st-bc">0 / 2 indicateurs</span></header>
+<div class="row"><label><input type="checkbox" id="bc1" data-b="bc"><span><b>Participation aux parcours nationaux</b><small>Référencement MRTC ou PCR avec au moins 10 patients pris en charge dans l’année.</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bc2" data-b="bc"><span><b>Taux de file active d’équipe parmi les patients ALD</b><small>Coordination renforcée de la patientèle ALD (RCP, dossier partagé, outil de coordination).</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bc3" data-b="bc"><span><b>Action « 0 patient ALD sans médecin traitant »</b><small>Organisation pour répondre aux besoins (modalités à définir en 2026).</small></span></label><div></div></div>
+<div class="row"><label><input type="checkbox" id="bc4" data-b="bc"><span><b>Accès aux spécialistes / articulation ville-hôpital</b><small>Spécialistes en secteur 1 ou OPTAM, ou liens contractuels avec les établissements et acteurs hospitaliers du territoire.</small></span></label><div></div></div>
+    <div class="total" style="border-top:0"><span>Valorisation de la brique</span><span class="num" id="v-bc">0 €</span></div>
+  </div>
+  <p class="warn" id="mfs-warn" hidden style="margin:0 4px 12px">Attention : la calculette officielle précise qu’il faut valider les indicateurs socles pour prétendre à la rémunération des briques complémentaires.</p>
+  <div class="group">
+    <div class="total"><span>Total bloc France Santé</span><span class="num" id="t-mfs-total">0 €</span></div>
   </div>
 </section>
 
 <!-- ============ RÉSULTAT ============ -->
 <section class="panel" id="p-res" role="tabpanel" aria-labelledby="t-res" hidden>
   <div class="group">
-    <header><h2>Estimation globale</h2></header>
-    <p class="sub">Le bloc ACI est reporté à l’identique chaque année ; le bloc France Santé évolue selon le calendrier du dispositif.</p>
-    <div class="tablewrap"><table aria-label="Estimation globale"><thead><tr><th></th><th>2026</th><th>2027</th><th>2028</th></tr></thead>
-      <tbody><tr><td>Bloc ACI</td><td class="num" id="g-a26"></td><td class="num" id="g-a27"></td><td class="num" id="g-a28"></td></tr>
-      <tr><td>Bloc France Santé</td><td class="num" id="g-m26"></td><td class="num" id="g-m27"></td><td class="num" id="g-m28"></td></tr></tbody>
-      <tfoot><tr><td>Total estimé</td><td class="num" id="g-t26"></td><td class="num" id="g-t27"></td><td class="num" id="g-t28"></td></tr></tfoot></table></div>
+    <header><h2>Estimation annuelle</h2></header>
+    <div class="tablewrap"><table aria-label="Estimation globale"><thead><tr><th></th><th>Montant</th></tr></thead>
+      <tbody><tr><td>Bloc ACI</td><td class="num" id="g-aci"></td></tr>
+      <tr><td>dont avance (60 % des socles)</td><td class="num" id="g-av"></td></tr>
+      <tr><td>Bloc France Santé</td><td class="num" id="g-mfs"></td></tr></tbody>
+      <tfoot><tr><td>Total estimé</td><td class="num" id="g-tot"></td></tr></tfoot></table></div>
   </div>
 </section>
 
 <div class="note" style="margin-top:16px">
   <p><b>Estimation indicative.</b> Seul le calcul de l’Assurance Maladie fait foi. Les nouveaux indicateurs de l’avenant 2 s’appliquent à partir du 1er janvier 2027 ; pour l’activité 2026, les indicateurs de l’avenant 1 restent en vigueur.</p>
-  <p>Montants issus de l’avenant 2 à l’ACI des structures de santé pluriprofessionnelles et des tableaux de synthèse de la FEMAS HDF. Paramètres du bloc France Santé et structure de l’outil inspirés du <a href="https://fecop.github.io/simulateur-aci-fecop/" target="_blank" rel="noopener">simulateur de la Fécop</a>.</p>
+  <p>Montants issus de l’avenant 2 à l’ACI des structures de santé pluriprofessionnelles et des tableaux de synthèse de la FEMAS HDF. Formules alignées sur la calculette ACI / MFS de l’avenant 2 (juin 2026) et sur le <a href="https://www.femage.fr/wp-content/uploads/2026/06/remixed-61645a5d.html" target="_blank" rel="noopener">simulateur de la FEMAGE</a>.</p>
   <p>Texte officiel : <a href="https://www.ameli.fr/exercice-coordonne/textes-reference/accord-national-structure-sante/avenant-2" target="_blank" rel="noopener">avenant 2 sur ameli.fr</a>. Une question ? L’équipe de la FEMAS HDF vous répond : <a href="https://avecsante.fr/femas-hdf/nous-contacter/" target="_blank" rel="noopener">nous contacter</a>.</p>
 </div>
 <footer>FEMAS Hauts-de-France · Fédération des maisons et pôles de santé des Hauts-de-France · Vos saisies restent sur votre appareil.</footer>
@@ -270,19 +287,15 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
   const on=id=>$(id).checked;
   const num=id=>Math.max(0,parseFloat($(id).value)||0);
   const radio=name=>document.querySelector('input[name="'+name+'"]:checked');
-  const KEY='femas-sim-aci-mfs-v1';
+  const KEY='femas-sim-aci-mfs-v2';
   const FAREF=4979;
 
   function setAmt(id,v){const el=$(id);el.textContent=fmt(v);el.classList.toggle('on',v>0);}
 
   function calc(){
     const P=num('pat'), r=P/4000;
-    // Accessibilité
-    let acc=0;
-    if(on('acc')){
-      const c=radio('cong').value;
-      if(c!=='x'){acc=4100+parseFloat(radio('sem').value)+parseFloat(radio('sam').value)+parseFloat(c);}
-    }
+    // Accessibilité : une seule situation retenue
+    const acc=parseFloat(radio('accs').value)||0;
     const snp=on('snp')?1500:0;
     const plan=on('plan')?700:0;
     const crise=(on('plan')&&on('crise'))?2450*r:0;
@@ -296,46 +309,44 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
     const div1=on('div1')?2100:0, div2=on('div2')?2100:0, ext1=on('ext1')?2100:0, ext2=on('ext2')?2100:0;
     const nm=Math.min(num('msp'),2), msp=2450*nm*r, mspIpa=(on('mspIpa')&&nm>=2)?1400:0;
     const u=radio('usa').value; let usa=0;
-    if(u==='q')usa=1000; else if(u==='e')usa=1000+Math.min(7*num('usaN'),2500);
+    if(u==='q')usa=1000; else if(u==='e')usa=1000+7*num('usaN');
     const usa2=on('usa2')?2100*r:0;
     const sas=parseFloat(radio('sas').value)||0;
     const stg=on('stg')?3150:0, stg3=on('stg3')?1575:0, stg4=on('stg4')?1575:0, sss=on('sss')?450:0;
     const cext=on('cext')?1400*r:0;
     const q1=on('q1')?700:0, q2=on('q2')?1400*r:0, q3=on('q3')?2100*r:0;
-    const env1=on('env1')?850:0, env2=on('env2')?1650:0;
-    const opt=div1+div2+ext1+ext2+msp+mspIpa+usa+usa2+sas+stg+stg3+stg4+sss+cext+q1+q2+q3+env1+env2;
+    const dec1=on('dec1')?850:0, dec2=on('dec2')?1650:0, env1=on('env1')?850:0, env2=on('env2')?1650:0;
+    const opt=div1+div2+ext1+ext2+msp+mspIpa+usa+usa2+sas+stg+stg3+stg4+sss+cext+q1+q2+q3+dec1+dec2+env1+env2;
     const aci=socle+opt;
 
-    const map={acc,snp,plan,crise,coord,proto:proto+protoIpa,rcp,rcpIpa,si,div1,div2,ext1,ext2,msp:msp+mspIpa,usa,usa2,sas,stg,stg3,stg4,sss,cext,q1,q2,q3,env1,env2};
+    const map={acc,snp,plan,crise,coord,proto:proto+protoIpa,rcp,rcpIpa,si,div1,div2,ext1,ext2,msp:msp+mspIpa,usa,usa2,sas,stg,stg3,stg4,sss,cext,q1,q2,q3,dec1,dec2,env1,env2};
     for(const k in map)setAmt('v-'+k,map[k]);
     $('s-socle').textContent=fmt(socle); $('s-opt').textContent=fmt(opt);
     $('t-aci-total').textContent=fmt(aci); $('t-avance').textContent=fmt(socle*0.6);
 
-    // France Santé
-    const FA=num('fa'), mult=FA>0?Math.sqrt(FA/FAREF):0;
-    const ok=on('m1')&&on('m2')&&on('m3');
-    const st=$('mfs-state'); st.textContent=ok?'Socle validé':'Socle non validé'; st.className='pill '+(ok?'ok':'no');
-    const s=[50000,40000,30000].map(v=>ok?v*mult:0);
-    const perB=[0,2500,5000];
-    const nb=['b1','b2','b3','b4'].filter(on).length;
-    ['b1','b2','b3','b4'].forEach(b=>setAmt('v-'+b,on(b)?perB[1]*mult:0));
-    const br=perB.map(v=>v*mult*nb);
-    $('s-briq').textContent=fmt(br[1])+' en 2027';
-    const y=['26','27','28'];
-    y.forEach((yy,i)=>{$('ms'+yy).textContent=fmt(s[i]);$('r-s'+yy).textContent=fmt(s[i]);$('r-b'+yy).textContent=fmt(br[i]);$('r-m'+yy).textContent=fmt(s[i]+br[i]);
-      $('g-a'+yy).textContent=fmt(aci);$('g-m'+yy).textContent=fmt(s[i]+br[i]);$('g-t'+yy).textContent=fmt(aci+s[i]+br[i]);});
-    $('k-aci').textContent=fmt(aci); $('k-mfs').textContent=fmt(s[0]+br[0]); $('k-tot').textContent=fmt(aci+s[0]+br[0]);
-    $('c-aci').textContent=fmt(aci); $('c-mfs').textContent=fmt(s[0]+br[0]);
+    // France Santé : 5 briques, chacune 10 000 € × √(FA / 4 979)
+    const FA=num('fa'), unit=FA>0?10000*Math.sqrt(FA/FAREF):10000;
+    const nSoc=['m1','m2','m3'].filter(on).length, sOk=nSoc===3;
+    const st=$('st-m'); st.textContent=nSoc+' / 3 indicateurs'+(sOk?' ✓':''); st.className='pill '+(sOk?'ok':'no');
+    let mfs=sOk?unit:0; setAmt('v-m',mfs); let anyB=false;
+    ['ba','bp','bv','bc'].forEach(b=>{const n=[...document.querySelectorAll('input[data-b="'+b+'"]')].filter(i=>i.checked).length; const ok=n>=2;
+      const e=$('st-'+b); e.textContent=Math.min(n,99)+' / 2 indicateurs'+(ok?' ✓':''); e.className='pill '+(ok?'ok':'no');
+      const v=ok?unit:0; setAmt('v-'+b,v); mfs+=v; if(ok)anyB=true;});
+    $('mfs-warn').hidden=!(anyB&&!sOk);
+    $('t-mfs-total').textContent=fmt(mfs);
+    $('g-aci').textContent=fmt(aci); $('g-av').textContent=fmt(socle*0.6); $('g-mfs').textContent=fmt(mfs); $('g-tot').textContent=fmt(aci+mfs);
+    $('k-aci').textContent=fmt(aci); $('k-mfs').textContent=fmt(mfs); $('k-tot').textContent=fmt(aci+mfs);
+    $('c-aci').textContent=fmt(aci); $('c-mfs').textContent=fmt(mfs);
     save();
   }
 
   const fields=()=>[...document.querySelectorAll('input')];
   function save(){try{const d={};fields().forEach(i=>{d[i.id]=(i.type==='checkbox'||i.type==='radio')?i.checked:i.value});localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
   function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(!d)return false;fields().forEach(i=>{if(!(i.id in d))return;if(i.type==='checkbox'||i.type==='radio')i.checked=d[i.id];else i.value=d[i.id];});return true;}catch(e){return false}}
-  function reset(){fields().forEach(i=>{if(i.type==='checkbox')i.checked=false;else if(i.type==='number')i.value=(i.id==='pat'||i.id==='fa')?4000:0;});['sem12','samO','cong0','usa0','sas0'].forEach(id=>$(id).checked=true);}
+  function reset(){fields().forEach(i=>{if(i.type==='checkbox')i.checked=false;else if(i.type==='number')i.value=i.id==='pat'?4000:(i.id==='fa'?4979:0);});['acc0','usa0','sas0'].forEach(id=>$(id).checked=true);}
   function example(){reset();
-    ['acc','snp','plan','crise','coord','rcp','si','div1','ext1','stg','q1','q2','m1','m2','m3','b1','b2'].forEach(id=>$(id).checked=true);
-    $('sem10').checked=true; $('proto').value=5; $('siPs').value=12; $('msp').value=2; $('usaQ').checked=true; $('sasB').checked=true;}
+    ['snp','plan','crise','coord','rcp','si','div1','ext1','stg','q1','q2','dec1','env1','m1','m2','m3','ba1','ba3','bp2','bp3'].forEach(id=>$(id).checked=true);
+    $('acc10').checked=true; $('proto').value=5; $('siPs').value=12; $('msp').value=2; $('usaQ').checked=true; $('sasB').checked=true;}
 
   document.addEventListener('input',calc); document.addEventListener('change',calc);
   $('btn-reset').addEventListener('click',()=>{reset();calc();});
@@ -351,4 +362,5 @@ footer{margin-top:22px;font-size:12.5px;color:var(--muted)}
   calc();
 })();
 </script>
+
 </body></html>
